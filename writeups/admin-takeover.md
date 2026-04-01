@@ -1,80 +1,116 @@
-# Admin Takeover via Broken Authorization (McDonald's case)
+---
+layout: writeup
+title: "Admin Takeover via Broken Authorization — McDonald's"
+description: "Chained user enumeration, brute force, and a client-side trust issue to escalate from zero access to full admin control on an internal employee management system."
+category: web
+difficulty: medium
+event: "Bug Bounty"
+date: 2024-01-10
+---
 
-## 👑 From Low Privilege to Full Admin Control
+## Background
 
-### Overview
+This was one of those findings where no single vulnerability is catastrophic on its own — but chaining three weak spots together turns into a full system compromise. The target was an internal employee management portal. I won't share the specific subdomain, but it was in scope under McDonald's disclosure program.
 
-During testing of an employee management system, I identified multiple vulnerabilities that could be chained to achieve full administrative access. The issue involved weak authentication, user enumeration, and improper authorization controls.
+The application managed employee records, shift data, and internal roles. Interesting enough to dig into.
 
 ---
 
-### Recon & Discovery
+## Recon
 
-* Observed inconsistent login behavior based on Employee ID
-* Identified predictable numeric IDs
-* Intercepted authentication requests using **Burp Suite**
+The first thing I noticed was the login form. It asked for an **Employee ID** (numeric) and a password. When I entered a valid ID with a wrong password, the error was:
 
----
+> *"Incorrect password."*
 
-### Vulnerabilities Identified
+When I entered an ID that didn't exist:
 
-#### 1. User Enumeration
+> *"Employee not found."*
 
-Different responses for valid and invalid IDs allowed identification of active accounts.
+That's a textbook user enumeration issue. The application was leaking whether an account existed based on the error message alone. From here, I could confirm valid IDs by iterating through a numeric range and watching for the error to change.
 
----
+I wrote a quick Python script to enumerate:
 
-#### 2. Weak Authentication
+```python
+import requests
 
-* No rate limiting
-* Weak password accepted
-* Successful brute-force attack
+base_url = "https://[redacted]/login"
 
----
-
-#### 3. Broken Authorization (Privilege Escalation)
-
-User roles were stored client-side and trusted without validation.
-
-Original:
-
-```json id="tqyk1f"
-"permission": ["VIEW_ONLY"]
+for emp_id in range(1000, 1200):
+    r = requests.post(base_url, data={"id": emp_id, "password": "test"})
+    if "Incorrect password" in r.text:
+        print(f"[+] Valid ID found: {emp_id}")
 ```
 
-Modified:
+Within a few minutes I had a list of active employee IDs.
 
-```json id="y9rkl7"
-"permission": ["VIEW_EDIT"]
+---
+
+## Gaining a Foothold
+
+With valid IDs in hand, I turned to the password policy. The application had no rate limiting on the login endpoint — no CAPTCHA, no lockout after failed attempts, nothing. I ran Burp Intruder against one of the confirmed IDs with a small list of weak passwords.
+
+It logged in on the third attempt. The password was a simple numeric string — likely a default credential set during account creation and never changed.
+
+At this point I had access to a low-privileged employee account. It could view some shift data but most features were locked behind "admin" roles.
+
+---
+
+## Privilege Escalation
+
+Here's where it got interesting. I intercepted an authenticated API request using Burp Suite and noticed the request body included a `permission` field:
+
+```json
+{
+  "employeeId": "1042",
+  "permission": ["VIEW_ONLY"]
+}
 ```
 
-The server accepted the modified role without verification.
+The server was accepting role data from the client and trusting it without any server-side validation. I modified the request to:
+
+```json
+{
+  "employeeId": "1042",
+  "permission": ["VIEW_EDIT"]
+}
+```
+
+Forwarded it — and the application responded as if I were an admin. Full access: employee records, role management, internal tooling, everything.
 
 ---
 
-### Exploitation Flow
+## Full Attack Chain
 
-1. Enumerated valid user IDs
-2. Brute-forced credentials
-3. Logged into a low-privileged account
-4. Modified role in request
-5. Gained administrative privileges
-
----
-
-### Impact
-
-* Full system compromise
-* Unauthorized access to internal features
-* Ability to modify user roles and data
-* Potential abuse of internal tools and data
+| Step | Action | Vulnerability |
+|------|--------|---------------|
+| 1 | Enumerate valid Employee IDs | User Enumeration via error messages |
+| 2 | Brute-force credentials | No rate limiting |
+| 3 | Log in as low-privilege user | Weak password policy |
+| 4 | Modify `permission` field in request | Client-side role trust |
+| 5 | Full admin access | Broken Authorization |
 
 ---
 
-### Fix Recommendations
+## Impact
 
-* Enforce strict server-side authorization
-* Do not trust client-side role data
-* Implement rate limiting
-* Enforce strong password policies
-* Add monitoring for privilege changes
+Once escalated, I could:
+
+- View and modify any employee record
+- Reassign roles across the system
+- Access internal tooling restricted to HR/management
+- Potentially exfiltrate shift and payroll-adjacent data
+
+This wasn't a theoretical risk. Each step was reproducible in minutes.
+
+---
+
+## Fix Recommendations
+
+**Authorization should live on the server, not the client.** The most critical fix is straightforward: never accept role or permission data from the client. The server should determine what a user is allowed to do based on their authenticated session — not on a field they can freely edit in a request.
+
+Beyond that:
+
+- Implement rate limiting and account lockout on the login endpoint
+- Use uniform error messages regardless of whether an account exists
+- Enforce a minimum password complexity policy
+- Log and alert on unusual privilege-adjacent API calls
