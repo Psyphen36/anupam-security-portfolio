@@ -1,11 +1,11 @@
 # ─────────────────────────────────────────
-#  Portfolio Config — Anupam Mishra / ozz
+#  Portfolio Config — ozz (Anupam Mishra)
 # ─────────────────────────────────────────
 
-title: "Anupam Mishra // Security Researcher"
+title: "ozz // Application Security Researcher"
 author: "ozz"
 email: "anupammishra87706@gmail.com"
-description: "Bug bounty writeups, recon pipelines, and security research by ozz."
+description: "Application security research, vulnerability analysis, and real-world bug reports by ozz."
 
 # Social links — leave blank to hide
 github_username:     "Psyphen36"
@@ -17,50 +17,49 @@ discord_server:      "RP9GA3qaVv"
 
 # Bio shown on homepage
 bio: >
-  Security researcher focused on web application pentesting and bug bounty hunting.
-  I find broken access control, IDORs, and auth flaws in real production systems —
-  McDonald's, Comcast, Bolt — and write about exactly how I got there.
-  Also build recon automation because doing things manually at scale is a waste of everyone's time.
+  Security researcher focused on application security, with hands-on experience identifying vulnerabilities in real-world systems through bug bounty programs.
+
+  My work centers around broken access control, authentication flaws, and API security issues. I’ve reported vulnerabilities in production environments, including issues affecting account access and SSO flows.
+
+  I approach security with a practical mindset — understanding how systems fail, why they fail, and how they should be designed to prevent it.
+
+  I also build lightweight recon and automation workflows to scale testing efficiently when needed.
 
 # Skill areas shown as badges in header
 focus_areas:
-  - Web Exploitation
+  - Application Security
   - API Security
-  - Broken Access Control
+  - Authentication & Session Management
+  - Access Control
   - Recon & Automation
-  - OSINT
 
 # Stats on homepage
 writeups_count: 4
-ctf_rank: "173/8000+"
+ctf_rank: "Top 200 – HTB Cyber Apocalypse"
 years_active: "2+"
 
-# Skills — trimmed to what's on your resume, accurate levels
+# Skills — reframed for AppSec positioning
 skills:
-  - name: "Burp Suite"
+  - name: "Web Application Security"
     level: 90
-  - name: "Web App Pentesting"
-    level: 88
   - name: "API Security Testing"
+    level: 88
+  - name: "Authentication & Session Management"
     level: 85
-  - name: "Broken Access Control"
+  - name: "Access Control (IDOR, Privilege Escalation)"
+    level: 88
+  - name: "Vulnerability Analysis & Reporting"
+    level: 90
+  - name: "Recon & Attack Surface Mapping"
     level: 85
-  - name: "Recon & OSINT"
-    level: 82
   - name: "Linux / Bash"
     level: 85
-  - name: "Python"
+  - name: "Python (Automation)"
     level: 78
-  - name: "SQL Injection"
+  - name: "Common Web Vulnerabilities (XSS, SQLi, CSRF)"
     level: 75
-  - name: "XSS / CSRF"
-    level: 72
-  - name: "Nuclei / FFUF"
-    level: 80
-  - name: "Subdomain Enumeration"
+  - name: "Security Testing Tools (Burp, FFUF, Nuclei)"
     level: 82
-  - name: "Cryptography"
-    level: 50
 
 # ─── Jekyll / GitHub Pages settings ───
 theme: minima
