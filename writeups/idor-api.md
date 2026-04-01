@@ -1,4 +1,8 @@
-# IDOR in Production API (Comcast case)
+---
+layout: writeup
+title: "IDOR in Production API (Comcast case)"
+category: Bug Bounty
+---
 
 ## 🔓 Breaking Access Control via ID Enumeration
 
