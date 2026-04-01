@@ -1,1 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ page.title }} // {{ site.author }}</title>
+  <meta name="description" content="{{ page.description | default: page.title }}"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg:        #080b0f;
+      --bg2:       #0d1117;
+      --bg3:       #131920;
+      --green:     #39d353;
+      --green-dim: #1a6b28;
+      --cyan:      #58d6f0;
+      --white:     #e6edf3;
+      --muted:     #7d8590;
+      --border:    #21262d;
+      --red:       #f85149;
+      --font:      'JetBrains Mono', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font);
+      font-size: 14px;
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { color: var(--green); }
+
+    /* ── Nav ── */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      background: rgba(8, 11, 15, 0.92);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .nav-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-home {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-home::before { content: '←'; font-weight: 300; }
+
+    .nav-path {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .nav-path span { color: var(--white); }
+
+    /* ── Container ── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Writeup Header ── */
+    .wu-header {
+      padding: 48px 0 36px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .wu-meta-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .wu-tag {
+      font-size: 10px;
+      padding: 2px 9px;
+      border-radius: 2px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .wu-tag.web    { background: #1a2a3a; color: #58d6f0; border: 1px solid #1e4060; }
+    .wu-tag.pwn    { background: #2a1a1a; color: #f85149; border: 1px solid #5a1f1f; }
+    .wu-tag.rev    { background: #2a2a1a; color: #e3b341; border: 1px solid #5a4a1f; }
+    .wu-tag.crypto { background: #1a1a2a; color: #a371f7; border: 1px solid #3a2a5a; }
+    .wu-tag.osint  { background: #1a2a1a; color: #56d364; border: 1px solid #1f5a2a; }
+    .wu-tag.misc   { background: #2a1a2a; color: #db61a2; border: 1px solid #5a1a4a; }
+    .wu-tag.forensics { background: #1a2a28; color: #39d4c5; border: 1px solid #1a5048; }
+
+    .wu-difficulty {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 2px;
+    }
+    .wu-difficulty.easy   { background: #0d2818; color: var(--green); border: 1px solid var(--green-dim); }
+    .wu-difficulty.medium { background: #2a2010; color: #e3b341; border: 1px solid #5a4010; }
+    .wu-difficulty.hard   { background: #2a1010; color: var(--red); border: 1px solid #5a1010; }
+    .wu-difficulty.insane { background: #1a1028; color: #a371f7; border: 1px solid #3a1a5a; }
+
+    .wu-date {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    h1.wu-title {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .wu-description {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 600px;
+    }
+
+    /* ── Markdown Content ── */
+    .wu-content h1,
+    .wu-content h2,
+    .wu-content h3,
+    .wu-content h4 {
+      color: var(--white);
+      font-weight: 600;
+      margin: 40px 0 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .wu-content h2 {
+      font-size: 18px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .wu-content h3 { font-size: 15px; color: var(--cyan); }
+    .wu-content h4 { font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .wu-content p {
+      color: var(--muted);
+      margin-bottom: 16px;
+      max-width: 720px;
+    }
+
+    .wu-content strong { color: var(--white); font-weight: 500; }
+    .wu-content em { color: var(--cyan); font-style: normal; }
+
+    .wu-content ul,
+    .wu-content ol {
+      padding-left: 20px;
+      margin-bottom: 16px;
+      color: var(--muted);
+    }
+
+    .wu-content li { margin-bottom: 4px; }
+    .wu-content li::marker { color: var(--green); }
+
+    /* Code blocks */
+    .wu-content code {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--green);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-family: var(--font);
+      font-size: 12px;
+    }
+
+    .wu-content pre {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green-dim);
+      border-radius: 4px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 24px 0;
+      position: relative;
+    }
+
+    .wu-content pre code {
+      background: none;
+      border: none;
+      color: var(--white);
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* Images */
+    .wu-content img {
+      max-width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      margin: 20px 0;
+      display: block;
+    }
+
+    /* Blockquotes */
+    .wu-content blockquote {
+      border-left: 3px solid var(--green-dim);
+      background: var(--bg2);
+      padding: 14px 18px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .wu-content blockquote p {
+      color: var(--cyan);
+      margin: 0;
+    }
+
+    /* Tables */
+    .wu-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 13px;
+    }
+
+    .wu-content th {
+      background: var(--bg3);
+      color: var(--green);
+      text-align: left;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+    }
+
+    .wu-content td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .wu-content tr:hover td { background: var(--bg2); }
+
+    /* ── Flag box ── */
+    .flag-box {
+      background: linear-gradient(135deg, #0d2818, #0a1a10);
+      border: 1px solid var(--green-dim);
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin: 40px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .flag-icon { font-size: 20px; }
+
+    .flag-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--green-dim);
+    }
+
+    .flag-value {
+      font-size: 13px;
+      color: var(--green);
+      word-break: break-all;
+    }
+
+    /* ── Back link ── */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 48px;
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 3px;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .back-link:hover { border-color: var(--green-dim); color: var(--green); }
+    .back-link::before { content: '←'; }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-home" href="{{ '/' | relative_url }}">{{ site.author }}</a>
+    <span class="nav-path">writeups / <span>{{ page.title }}</span></span>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- Writeup Header -->
+  <div class="wu-header">
+    <div class="wu-meta-top">
+      {% if page.category %}
+      <span class="wu-tag {{ page.category | downcase }}">{{ page.category }}</span>
+      {% endif %}
+      {% if page.difficulty %}
+      <span class="wu-difficulty {{ page.difficulty | downcase }}">{{ page.difficulty }}</span>
+      {% endif %}
+      {% if page.event %}
+      <span class="wu-date">{{ page.event }}</span>
+      {% endif %}
+      {% if page.date %}
+      <span class="wu-date">{{ page.date | date: "%B %d, %Y" }}</span>
+      {% endif %}
+    </div>
+
+    <h1 class="wu-title">{{ page.title }}</h1>
+
+    {% if page.description %}
+    <p class="wu-description">{{ page.description }}</p>
+    {% endif %}
+  </div>
+
+  <!-- Writeup Body -->
+  <div class="wu-content">
+    {{ content }}
+  </div>
+
+  <!-- Flag (optional) -->
+  {% if page.flag %}
+  <div class="flag-box">
+    <span class="flag-icon">🚩</span>
+    <div>
+      <div class="flag-label">Flag</div>
+      <div class="flag-value">{{ page.flag }}</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Back -->
+  <a class="back-link" href="{{ '/' | relative_url }}">All Writeups</a>
+
+</div>
+
+</body>
+</html>
