@@ -406,6 +406,12 @@ layout: null
       {% if site.tryhackme_username %}
       <a href="https://tryhackme.com/p/{{ site.tryhackme_username }}" target="_blank" rel="noopener">TryHackMe</a>
       {% endif %}
+      {% if site.linkedin_username %}
+      <a href="https://linkedin.com/in/{{ site.linkedin_username }}" target="_blank" rel="noopener">LinkedIn</a>
+      {% endif %}
+      {% if site.discord_server %}
+      <a href="https://discord.gg/{{ site.discord_server }}" target="_blank" rel="noopener">Discord</a>
+      {% endif %}
       {% if site.email %}
       <a href="mailto:{{ site.email }}">Email</a>
       {% endif %}
@@ -427,7 +433,7 @@ layout: null
       {% if site.ctf_rank %}
       <div class="stat-item">
         <div class="stat-num">{{ site.ctf_rank }}</div>
-        <div class="stat-label">ctf rank</div>
+        <div class="stat-label">htb cyber apocalypse</div>
       </div>
       {% endif %}
       {% if site.cves %}
