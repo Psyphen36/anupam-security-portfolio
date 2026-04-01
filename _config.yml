@@ -9,8 +9,8 @@ description: "Bug bounty writeups, recon pipelines, and security research by ozz
 
 # Social links — leave blank to hide
 github_username:     "Psyphen36"
-twitter_username:    ""
-hackthebox_username: "ozz0x"
+# twitter_username:    ""
+hackthebox_username: "019ca955-bc24-720d-8fb3-6a5ae7b4deeb"
 tryhackme_username:  "ozz0x"
 linkedin_username:   "anupam-mishra-75256432a"
 discord_server:      "RP9GA3qaVv"
@@ -31,8 +31,8 @@ focus_areas:
   - OSINT
 
 # Stats on homepage
-writeups_count: 3
-ctf_rank: "173 / 8000+"
+writeups_count: 4
+ctf_rank: "173/8000+"
 years_active: "2+"
 
 # Skills — trimmed to what's on your resume, accurate levels
