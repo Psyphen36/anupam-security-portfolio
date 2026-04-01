@@ -1,3 +1,81 @@
-remote_theme: pages-themes/minimal@v0.2.0
+# ─────────────────────────────────────────
+#  Portfolio Config — update everything here
+# ─────────────────────────────────────────
+
+title: "YourHandle // Security Researcher"
+author: "YourHandle"          # your CTF handle / name
+email: ""                     # optional
+description: "CTF writeups and security research"
+
+# Social links — leave blank to hide
+github_username:    "your-github"
+twitter_username:   ""          # optional
+hackthebox_username: ""         # optional
+tryhackme_username:  ""         # optional
+
+# Your one-liner bio shown on homepage
+bio: >
+  I play CTFs, hunt bugs, and break things for fun (and sometimes profit).
+  Focused on web exploitation and binary analysis.
+  These writeups are my public notes — read, learn, steal ideas.
+
+# Skill areas shown as badges in header
+focus_areas:
+  - Web Exploitation
+  - Binary Exploitation
+  - Reverse Engineering
+  - Cryptography
+  - OSINT
+
+# Stats displayed on homepage — remove lines you don't want shown
+writeups_count: 12    # override auto-count if you want
+years_active: "3+"
+# ctf_rank: "#420"    # uncomment if you want to show this
+# cves: 2             # uncomment if you have CVEs
+
+# Skills with proficiency % (1-100)
+skills:
+  - name: "Web Exploitation"
+    level: 85
+  - name: "SQL Injection"
+    level: 80
+  - name: "XSS / CSRF"
+    level: 75
+  - name: "Binary Exploitation"
+    level: 65
+  - name: "Reverse Engineering"
+    level: 60
+  - name: "Cryptography"
+    level: 55
+  - name: "OSINT"
+    level: 70
+  - name: "Forensics"
+    level: 60
+  - name: "Linux / Bash"
+    level: 90
+  - name: "Python"
+    level: 80
+  - name: "Burp Suite"
+    level: 85
+  - name: "GDB / pwndbg"
+    level: 65
+
+# ─── Jekyll / GitHub Pages settings ───
+theme: minima           # base theme (we override all styling)
 plugins:
-- jekyll-remote-theme # add this line to the plugins list if you already have one
+  - jekyll-relative-links
+  - jekyll-seo-tag
+
+# So Jekyll finds your writeup pages
+include:
+  - writeups
+
+# Date format
+date_format: "%B %d, %Y"
+
+defaults:
+  - scope:
+      path: "writeups"
+      type: "pages"
+    values:
+      layout: writeup
