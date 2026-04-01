@@ -383,8 +383,9 @@ layout: null
     </div>
     <h1><span class="handle">{{ site.author }}</span><span class="cursor"></span></h1>
     <p class="tagline">
-      Penetration tester &amp; CTF player. I break things, document how, and
-      <span class="highlight">write about it</span>.
+      Security researcher focused on finding real-world vulnerabilities in web applications and APIs.
+I analyze how things break, why they break, and how they
+      <span class="highlight">should have been built</span>.
     </p>
 
     <div class="badges">
@@ -425,7 +426,7 @@ layout: null
           {% assign wu_count = site.posts.size %}
           {{ site.writeups_count | default: wu_count }}
         </div>
-        <div class="stat-label">writeups</div>
+        <div class="stat-label">research</div>
       </div>
       {% if site.ctf_rank %}
       <div class="stat-item">
@@ -447,6 +448,10 @@ layout: null
       {% endif %}
     </div>
   </section>
+
+<p style="color: var(--muted); font-size: 13px; margin-bottom: 16px; max-width: 600px;">
+Selected vulnerability reports and technical writeups based on real-world findings.
+</p>
 
   <!-- ── Writeups ── -->
   <section>
@@ -498,7 +503,7 @@ layout: null
   </section>
 
   <footer>
-    <span>{{ site.author }}</span> · built with jekyll · hosted on github pages
+    <span>{{ site.author }}</span> · built with jekyll · security-focused portfolio
   </footer>
 
 </div>
