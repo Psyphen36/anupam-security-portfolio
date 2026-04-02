@@ -62,7 +62,7 @@ skills:
     level: 72
 
 # ─── Jekyll / GitHub Pages settings ───
-# theme: minima
+theme: minima
 plugins:
   - jekyll-relative-links
   - jekyll-seo-tag
