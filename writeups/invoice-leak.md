@@ -5,7 +5,9 @@ description: "Customer invoices were publicly accessible via a predictable URL p
 category: web
 difficulty: easy
 event: "Bug Bounty"
-date: 2023-11-05
+status: duplicate
+outcome_note: "Marked as duplicate — another researcher had reported the same issue before me. Duplicate status confirms the vulnerability was valid and already known to the team."
+date: 2025-6-05
 ---
 
 ## Overview
