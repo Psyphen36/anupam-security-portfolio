@@ -7,7 +7,7 @@ difficulty: easy
 event: "Bug Bounty"
 status: duplicate
 outcome_note: "Marked as duplicate — another researcher had reported the same issue before me. Duplicate status confirms the vulnerability was valid and already known to the team."
-date: 2025-6-05
+date: 2025-06-05
 ---
 
 ## Overview
