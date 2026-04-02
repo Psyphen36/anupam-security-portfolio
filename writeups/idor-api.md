@@ -5,7 +5,9 @@ description: "A predictable numeric user ID exposed through an authenticated end
 category: web
 difficulty: easy
 event: "Bug Bounty"
-date: 2024-03-22
+status: oos
+outcome_note: "Submitted via Bugcrowd. Marked out of scope by the program. The endpoint and the data it exposed were real — the finding just fell outside the defined program boundaries at the time."
+date: 2025-04-22
 ---
 
 ## How It Started
