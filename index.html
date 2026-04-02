@@ -383,13 +383,15 @@ layout: null
     </div>
     <h1><span class="handle">{{ site.author }}</span><span class="cursor"></span></h1>
     <p class="tagline">
-      Security researcher focused on finding real-world vulnerabilities in web applications and APIs.
-I analyze how things break, why they break, and how they
-      <span class="highlight">should have been built</span>.
-    </p>
+  Hands-on application security — bug bounty findings, API testing, and recon tooling.
+  <span class="highlight">contribute from day one</span>.
+</p>  
 
-    
-
+<div class="badges">
+  {% for area in site.focus_areas %}
+  <span class="badge active">{{ area }}</span>
+  {% endfor %}
+</div>
 
     <div class="social-links">
       {% if site.github_username %}
