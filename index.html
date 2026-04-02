@@ -500,7 +500,7 @@ Selected vulnerability reports and technical writeups based on real-world findin
   <section>
     <div class="section-label">research</div>
     <div class="writeup-grid">
-      {% assign writeups = site.pages | where_exp: "p", "p.path contains 'writeups/'" | sort: "date" | reverse %}
+      {% assign writeups = site.pages | where: "layout", "writeup" | sort: "date" | reverse %}
       {% for wu in writeups %}
       {% if wu.title %}
       <a class="writeup-card fade-in" href="{{ wu.url | relative_url }}">
