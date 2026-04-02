@@ -24,6 +24,7 @@
       font-size: 14px;
       line-height: 1.7;
       min-height: 100vh;
+      cursor: none;
     }
 
     /* Subtle scanline overlay */
@@ -44,6 +45,38 @@
 
     a { color: var(--cyan); text-decoration: none; }
     a:hover { color: var(--green); }
+
+/* Custom Cursor */
+#cursor-dot, #cursor-outline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 9999;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+#cursor-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #39d353; /* tweak to match your theme */
+}
+
+#cursor-outline {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #39d353;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+              opacity 0.3s ease;
+}
+
+/* Hover effect */
+#cursor-outline.hover {
+  transform: translate(-50%, -50%) scale(1.5);
+  opacity: 0.5;
+}
 
     /* ── Layout ── */
     .container {
