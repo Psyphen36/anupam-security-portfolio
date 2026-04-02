@@ -5,6 +5,9 @@ description: "A flaw in Zoho's invitation flow allowed anyone with a valid invit
 category: web
 difficulty: medium
 event: "Bug Bounty"
+status: paid
+bounty: 200
+outcome_note: "Reported responsibly through Zoho's security disclosure program. Triaged as valid, fix deployed, bounty awarded."
 date: 2025-11-03
 ---
 
