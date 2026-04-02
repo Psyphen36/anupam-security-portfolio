@@ -11,9 +11,12 @@ layout: null
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body>
 
+<div id="cursor-dot"></div>
+<div id="cursor-outline"></div>
 <div class="container">
 
   <!-- ── Header ── -->
@@ -187,5 +190,44 @@ Selected vulnerability reports and technical writeups based on real-world findin
   </footer>
 
 </div>
+<script>
+const cursorDot = document.getElementById('cursor-dot');
+const cursorOutline = document.getElementById('cursor-outline');
+const hoverTargets = document.querySelectorAll('.hover-target');
+
+gsap.set(cursorDot, { xPercent: -50, yPercent: -50 });
+gsap.set(cursorOutline, { xPercent: -50, yPercent: -50 });
+
+const dotX = gsap.quickTo(cursorDot, "x", { duration: 0.3, ease: "power3" });
+const dotY = gsap.quickTo(cursorDot, "y", { duration: 0.3, ease: "power3" });
+
+const outlineX = gsap.quickTo(cursorOutline, "x", { duration: 0.7, ease: "power3" });
+const outlineY = gsap.quickTo(cursorOutline, "y", { duration: 0.7, ease: "power3" });
+
+window.addEventListener('mousemove', (e) => {
+  gsap.to([cursorDot, cursorOutline], { opacity: 1, duration: 0.2 });
+  dotX(e.clientX);
+  dotY(e.clientY);
+  outlineX(e.clientX);
+  outlineY(e.clientY);
+});
+
+/* Hover scaling */
+hoverTargets.forEach(target => {
+  target.addEventListener('mouseenter', () => {
+    cursorOutline.classList.add('hover');
+  });
+  target.addEventListener('mouseleave', () => {
+    cursorOutline.classList.remove('hover');
+  });
+});
+
+window.addEventListener('click', () => {
+  gsap.fromTo(cursorOutline,
+    { scale: 1 },
+    { scale: 2, duration: 0.2, yoyo: true, repeat: 1 }
+  );
+});
+</script>
 </body>
 </html>
