@@ -450,9 +450,40 @@ I analyze how things break, why they break, and how they
 Selected vulnerability reports and technical writeups based on real-world findings.
 </p>
 
+<!-- ── Security Tooling ── -->
+<section>
+  <div class="section-label">security tooling</div>
+
+  <div class="writeup-grid">
+
+    <a class="writeup-card fade-in" href="https://github.com/Psyphen36/OzzMon" target="_blank" rel="noopener">
+      <div class="wu-left">
+        <div class="wu-title">OzzMon — Continuous Recon & Attack Surface Monitoring</div>
+
+        <div class="wu-meta">
+          <span class="wu-tag misc">automation</span>
+          <span class="wu-tag misc">appsec</span>
+          <span class="wu-date">github project</span>
+        </div>
+
+        <div style="margin-top:6px; font-size:12px; color:var(--muted); max-width:600px;">
+          Continuous recon pipeline built with GitHub Actions to monitor target domains for changes in attack surface.
+          Tracks newly exposed assets over time, performs service enrichment, and sends real-time alerts for high-signal findings.
+        </div>
+      </div>
+
+      <div class="wu-right">
+        <span class="wu-difficulty medium">project</span>
+        <span class="wu-arrow">↗</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
   <!-- ── Writeups ── -->
   <section>
-    <div class="section-label">writeups</div>
+    <div class="section-label">research</div>
     <div class="writeup-grid">
       {% assign writeups = site.pages | where_exp: "p", "p.path contains 'writeups/'" | sort: "date" | reverse %}
       {% for wu in writeups %}
