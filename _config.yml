@@ -17,13 +17,13 @@ discord_server:      "RP9GA3qaVv"
 
 # Bio shown on homepage
 bio: >
-  Security researcher focused on application security, with hands-on experience identifying vulnerabilities in real-world systems through bug bounty programs.
+  I'm an application security researcher currently looking for my first role in AppSec or security analysis.
 
-  My work centers around broken access control, authentication flaws, and API security issues. I’ve reported vulnerabilities in production environments, including issues affecting account access and SSO flows.
+  Over the past two years I've been learning and doing bug bounty work — mostly web apps and APIs. I've reported real vulnerabilities in production environments: broken access control, SSO issues, and authentication flaws. Nothing massive, but real findings in real systems.
 
-  I approach security with a practical mindset — understanding how systems fail, why they fail, and how they should be designed to prevent it.
+  I'm comfortable with Burp Suite, manual testing, and writing clear reports. I also built a small recon pipeline (OzzMon) that runs on GitHub Actions to monitor attack surface changes.
 
-  I also build lightweight recon and automation workflows to scale testing efficiently when needed.
+  Still learning. But I test carefully, document thoroughly, and don't report noise.
 
 # Skill areas shown as badges in header
 focus_areas:
@@ -35,34 +35,34 @@ focus_areas:
 
 # Stats on homepage
 writeups_count: 4
-ctf_rank: "Top 200 – HTB Cyber Apocalypse"
+ctf_rank: "Top 200 – HTB Cyber Apocalypse 2025"
 years_active: "2+"
 
 # Skills — reframed for AppSec positioning
 skills:
   - name: "Web Application Security"
-    level: 90
+    level: 72
   - name: "API Security Testing"
-    level: 88
+    level: 68
   - name: "Authentication & Session Management"
-    level: 85
+    level: 70
   - name: "Access Control (IDOR, Privilege Escalation)"
-    level: 88
+    level: 72
   - name: "Vulnerability Analysis & Reporting"
-    level: 90
-  - name: "Recon & Attack Surface Mapping"
-    level: 85
-  - name: "Linux / Bash"
-    level: 85
-  - name: "Python (Automation)"
-    level: 78
-  - name: "Common Web Vulnerabilities (XSS, SQLi, CSRF)"
     level: 75
+  - name: "Recon & Attack Surface Mapping"
+    level: 70
+  - name: "Linux / Bash"
+    level: 68
+  - name: "Python (Automation)"
+    level: 60
+  - name: "Common Web Vulnerabilities (XSS, SQLi, CSRF)"
+    level: 65
   - name: "Security Testing Tools (Burp, FFUF, Nuclei)"
-    level: 82
+    level: 72
 
 # ─── Jekyll / GitHub Pages settings ───
-theme: minima
+# theme: minima
 plugins:
   - jekyll-relative-links
   - jekyll-seo-tag
