@@ -5,7 +5,9 @@ description: "Chained user enumeration, brute force, and a client-side trust iss
 category: web
 difficulty: medium
 event: "Bug Bounty"
-date: 2024-01-10
+status: oos
+outcome_note: "Reported responsibly. Marked out of scope after triage — the system turned out to be a decommissioned third-party application no longer under the program's control. The vulnerability chain was real; the asset just wasn't theirs to fix."
+date: 2025-03-10
 ---
 
 ## Background
