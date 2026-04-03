@@ -12,16 +12,22 @@
   --bg:        #0d0a07;
   --bg2:       #130f09;
   --bg3:       #1a1510;
-  --green:     #cb8f5f;
+  --green:     #cb8f5f;   /* warm amber — primary / about section */
   --green-dim: #6b4428;
-  --green-glow:rgba(203, 143, 95, 0.12);
-  --cyan:      #d4b07a;
+  --green-glow:rgba(203,143,95,0.12);
+  --cyan:      #7dc4b0;   /* warm teal — links / skills section */
   --white:     #ede8dc;
   --muted:     #8a7d6d;
   --border:    #231d14;
-  --red:       #c95c4a;
+  --red:       #d4756a;   /* warm coral */
   --font:      'JetBrains Mono', monospace;
   --transition: 0.2s ease;
+
+  /* section accent colours — each section gets its own */
+  --s-about:   #cb8f5f;  /* amber  */
+  --s-reports: #c47a90;  /* rose   */
+  --s-skills:  #7dc4b0;  /* teal   */
+  --s-contact: #d4aa6a;  /* gold   */
 }
 
 html { scroll-behavior: smooth; }
@@ -61,7 +67,7 @@ body::after {
   left: -200px;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, rgba(203,143,9,0.04) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(125,196,176,0.35) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
   animation: ambientDrift 12s ease-in-out infinite alternate;
@@ -281,7 +287,7 @@ section:last-of-type { border-bottom: none; }
   font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--green);
+  color: var(--s-about);
   margin-bottom: 28px;
   display: flex;
   align-items: center;
@@ -360,6 +366,7 @@ section:last-of-type { border-bottom: none; }
   background: var(--bg2);
   border: 1px solid var(--border);
   border-radius: 3px;
+  border-left-width: 2px;
   gap: 16px;
   text-decoration: none;
   color: inherit;
@@ -382,6 +389,16 @@ section:last-of-type { border-bottom: none; }
   transform: translateX(-100%);
   transition: transform 0.55s ease;
 }
+
+.writeup-card { border-left-width: 2px; }
+.writeup-card.tag-web    { border-left-color: #1a3450; }
+.writeup-card.tag-pwn    { border-left-color: #502020; }
+.writeup-card.tag-crypto { border-left-color: #3a2050; }
+.writeup-card.tag-forensics { border-left-color: #1a4840; }
+
+.writeup-card.tag-web:hover    { border-color: #1a3450; border-left-color: #7aaed4; }
+.writeup-card.tag-pwn:hover    { border-color: #502020; border-left-color: #d4756a; }
+.writeup-card.tag-crypto:hover { border-color: #3a2050; border-left-color: #b08fcc; }
 
 .writeup-card:hover {
   border-color: var(--green-dim);
@@ -420,10 +437,10 @@ section:last-of-type { border-bottom: none; }
   padding: 2px 7px;
   border-radius: 2px;
 }
-.wu-status--paid      { background: #1a1008; color: var(--green);  border: 1px solid var(--green-dim); }
-.wu-status--duplicate { background: #1a1508; color: var(--cyan);   border: 1px solid #5a4018; }
-.wu-status--oos       { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
-.wu-status--triaged   { background: #141008; color: var(--cyan);   border: 1px solid #5a3d18; }
+.wu-status--paid      { background:#0d1a0d; color:#8ab87a; border:1px solid #1e4a1e; }
+.wu-status--duplicate { background:#1c1608; color:#d4aa6a; border:1px solid #504018; }
+.wu-status--oos       { background:var(--bg3); color:var(--muted); border:1px solid var(--border); }
+.wu-status--triaged   { background:#0d1520; color:#7aaed4; border:1px solid #1a3450; }
 
 /* ── Tags ── */
 .wu-tag {
@@ -433,13 +450,13 @@ section:last-of-type { border-bottom: none; }
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
-.wu-tag.web      { background: #1a1408; color: var(--cyan);  border: 1px solid #4a3518; }
-.wu-tag.pwn      { background: #221008; color: var(--red);   border: 1px solid #5a2218; }
-.wu-tag.rev      { background: #201808; color: var(--green); border: 1px solid #5a4018; }
-.wu-tag.crypto   { background: #18100e; color: #c47a8a;      border: 1px solid #4a2028; }
-.wu-tag.osint    { background: #0e1808; color: #8fa85f;      border: 1px solid #304018; }
-.wu-tag.misc     { background: #1c1008; color: #b8855f;      border: 1px solid #5a3018; }
-.wu-tag.forensics{ background: #141808; color: #7abfa0;      border: 1px solid #284830; }
+.wu-tag.web      { background:#0d1520; color:#7aaed4; border:1px solid #1a3450; }
+.wu-tag.pwn      { background:#1e0d0d; color:#d4756a; border:1px solid #502020; }
+.wu-tag.rev      { background:#1c1608; color:#d4aa6a; border:1px solid #504018; }
+.wu-tag.crypto   { background:#150d1e; color:#b08fcc; border:1px solid #3a2050; }
+.wu-tag.osint    { background:#0d1a0d; color:#8ab87a; border:1px solid #1e4a1e; }
+.wu-tag.misc     { background:#1e0d14; color:#c47a90; border:1px solid #502030; }
+.wu-tag.forensics{ background:#0d1a18; color:#7dc4b0; border:1px solid #1a4840; }
 
 .wu-date { font-size: 11px; color: var(--muted); }
 
@@ -455,10 +472,10 @@ section:last-of-type { border-bottom: none; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.wu-difficulty.easy   { color: var(--green); }
-.wu-difficulty.medium { color: #e3b341; }
-.wu-difficulty.hard   { color: var(--red); }
-.wu-difficulty.insane { color: #a371f7; }
+.wu-difficulty.easy   { color: #8ab87a; }   /* leaf green  */
+.wu-difficulty.medium { color: #d4aa6a; }   /* warm gold   */
+.wu-difficulty.hard   { color: #d4756a; }   /* warm coral  */
+.wu-difficulty.insane { color: #b08fcc; }   /* lavender    */
 
 .wu-arrow {
   color: var(--muted);
