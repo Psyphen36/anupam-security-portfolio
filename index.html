@@ -11,30 +11,40 @@ layout: null
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 </head>
 <body>
 
 <div id="cursor-dot"></div>
 <div id="cursor-outline"></div>
+
 <div class="container">
 
   <!-- ── Header ── -->
   <header>
-    <div class="prompt">
-      <span>~/security</span> $<span style="color:var(--muted)"> whoami</span>
-    </div>
-    <h1><span class="handle">{{ site.author }}</span><span class="cursor"></span></h1>
-    <p class="tagline">
-  Hands-on application security — bug bounty findings, API testing, and recon tooling.
-  <span class="highlight">contribute from day one</span>.
-</p>  
 
-<div class="badges">
-  {% for area in site.focus_areas %}
-  <span class="badge active">{{ area }}</span>
-  {% endfor %}
-</div>
+    <!-- Availability signal — first thing recruiters see -->
+    <div class="avail-banner">
+      <div class="avail-dot"></div>
+      <span><strong>Open to work</strong> — actively looking for AppSec / Security Analyst roles</span>
+    </div>
+
+    <div class="prompt">
+      <span class="dir">~/security</span> $<span class="cmd"> whoami</span>
+    </div>
+
+    <h1><span class="handle">{{ site.author }}</span><span class="cursor"></span></h1>
+
+    <p class="tagline">
+      Hands-on application security — bug bounty findings, API testing, and recon tooling.
+      Ready to <span class="highlight">contribute from day one</span>.
+    </p>
+
+    <div class="badges">
+      {% for area in site.focus_areas %}
+      <span class="badge active">{{ area }}</span>
+      {% endfor %}
+    </div>
 
     <div class="social-links">
       {% if site.github_username %}
@@ -53,22 +63,21 @@ layout: null
       <a href="https://discord.gg/{{ site.discord_server }}" target="_blank" rel="noopener">Discord</a>
       {% endif %}
       {% if site.email %}
-      <a href="mailto:{{ site.email }}">Email</a>
+      <a href="mailto:{{ site.email }}">{{ site.email }}</a>
       {% endif %}
     </div>
+
   </header>
 
   <!-- ── About ── -->
   <section>
     <div class="section-label">about</div>
     <p class="about-text">{{ site.bio }}</p>
+
     <div class="stats">
       <div class="stat-item">
-        <div class="stat-num">
-          {% assign wu_count = site.posts.size %}
-          {{ site.writeups_count | default: wu_count }}
-        </div>
-        <div class="stat-label">research</div>
+        <div class="stat-num" data-count="{{ site.writeups_count | default: '4' }}">0</div>
+        <div class="stat-label">research pieces</div>
       </div>
       {% if site.ctf_rank %}
       <div class="stat-item">
@@ -78,7 +87,7 @@ layout: null
       {% endif %}
       {% if site.cves %}
       <div class="stat-item">
-        <div class="stat-num">{{ site.cves }}</div>
+        <div class="stat-num" data-count="{{ site.cves }}">0</div>
         <div class="stat-label">CVEs</div>
       </div>
       {% endif %}
@@ -91,50 +100,46 @@ layout: null
     </div>
   </section>
 
-<!-- ── Security Tooling ── -->
-<section>
-  <div class="section-label">security tooling</div>
+  <!-- ── Security Tooling ── -->
+  <section>
+    <div class="section-label">security tooling</div>
 
-  <div class="writeup-grid">
-
-    <a class="writeup-card fade-in" href="https://github.com/Psyphen36/OzzMon" target="_blank" rel="noopener">
-      <div class="wu-left">
-        <div class="wu-title">OzzMon — Continuous Recon & Attack Surface Monitoring</div>
-
-        <div class="wu-meta">
-          <span class="wu-tag misc">automation</span>
-          <span class="wu-tag misc">appsec</span>
-          <span class="wu-date">github project</span>
+    <div class="writeup-grid">
+      <a class="writeup-card reveal" href="https://github.com/Psyphen36/OzzMon" target="_blank" rel="noopener">
+        <div class="wu-left">
+          <div class="wu-title">OzzMon — Continuous Recon &amp; Attack Surface Monitoring</div>
+          <div class="wu-meta">
+            <span class="wu-tag misc">automation</span>
+            <span class="wu-tag misc">appsec</span>
+            <span class="wu-date">github project</span>
+          </div>
+          <div style="margin-top:8px; font-size:12px; color:var(--muted); max-width:560px; line-height:1.75;">
+            Continuous recon pipeline on GitHub Actions — monitors target domains for attack surface changes,
+            enriches services, and fires real-time alerts on high-signal findings.
+          </div>
         </div>
-
-        <div style="margin-top:6px; font-size:12px; color:var(--muted); max-width:600px;">
-          Continuous recon pipeline built with GitHub Actions to monitor target domains for changes in attack surface.
-          Tracks newly exposed assets over time, performs service enrichment, and sends real-time alerts for high-signal findings.
+        <div class="wu-right">
+          <span class="wu-difficulty medium">project</span>
+          <span class="wu-arrow">↗</span>
         </div>
-      </div>
+      </a>
+    </div>
+  </section>
 
-      <div class="wu-right">
-        <span class="wu-difficulty medium">project</span>
-        <span class="wu-arrow">↗</span>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<p style="color: var(--muted); font-size: 13px; margin-bottom: 5px; max-width: 600px;">
-Selected vulnerability reports and technical writeups based on real-world findings.
-</p>
-
-  <!-- ── Writeups ── -->
+  <!-- ── Research / Writeups ── -->
   <section>
     <div class="section-label">research</div>
+
+    <p style="color:var(--muted); font-size:12px; margin-bottom:18px; max-width:580px; line-height:1.8;">
+      Selected vulnerability reports and technical writeups based on real-world findings.
+    </p>
+
     <div class="writeup-grid">
       {% assign writeups = site.pages | where: "layout", "writeup" %}
-{% assign writeups = writeups | sort: "date" | reverse %}
+      {% assign writeups = writeups | sort: "date" | reverse %}
       {% for wu in writeups %}
       {% if wu.title %}
-      <a class="writeup-card fade-in" href="{{ wu.url | relative_url }}">
+      <a class="writeup-card reveal" href="{{ wu.url | relative_url }}">
         <div class="wu-left">
           <div class="wu-title">{{ wu.title }}</div>
           <div class="wu-meta">
@@ -154,14 +159,14 @@ Selected vulnerability reports and technical writeups based on real-world findin
           <span class="wu-difficulty {{ wu.difficulty | downcase }}">{{ wu.difficulty }}</span>
           {% endif %}
           {% if wu.status %}
-<span class="wu-status wu-status--{{ wu.status }}">
-  {% if wu.status == "paid" %}${{ wu.bounty | default: "bounty" }}
-  {% elsif wu.status == "duplicate" %}dupe
-  {% elsif wu.status == "oos" %}oos
-  {% elsif wu.status == "triaged" %}triaged
-  {% endif %}
-</span>
-{% endif %}
+          <span class="wu-status wu-status--{{ wu.status }}">
+            {% if wu.status == "paid" %}${{ wu.bounty | default: "bounty" }}
+            {% elsif wu.status == "duplicate" %}dupe
+            {% elsif wu.status == "oos" %}oos
+            {% elsif wu.status == "triaged" %}triaged
+            {% endif %}
+          </span>
+          {% endif %}
           <span class="wu-arrow">→</span>
         </div>
       </a>
@@ -175,10 +180,10 @@ Selected vulnerability reports and technical writeups based on real-world findin
     <div class="section-label">skills</div>
     <div class="skills-grid">
       {% for skill in site.skills %}
-      <div class="skill-item">
+      <div class="skill-item reveal">
         <div class="skill-name">{{ skill.name }}</div>
         <div class="skill-bar">
-          <div class="skill-fill" style="width: {{ skill.level }}%"></div>
+          <div class="skill-fill" data-level="{{ skill.level }}"></div>
         </div>
       </div>
       {% endfor %}
@@ -189,45 +194,75 @@ Selected vulnerability reports and technical writeups based on real-world findin
     <span>{{ site.author }}</span> · built with jekyll · security-focused portfolio
   </footer>
 
-</div>
+</div><!-- /container -->
+
 <script>
-const cursorDot = document.getElementById('cursor-dot');
+/* ── Custom cursor (GSAP) ── */
+const cursorDot     = document.getElementById('cursor-dot');
 const cursorOutline = document.getElementById('cursor-outline');
-const hoverTargets = document.querySelectorAll('.hover-target');
 
-gsap.set(cursorDot, { xPercent: -50, yPercent: -50 });
-gsap.set(cursorOutline, { xPercent: -50, yPercent: -50 });
-
-const dotX = gsap.quickTo(cursorDot, "x", { duration: 0.3, ease: "power3" });
-const dotY = gsap.quickTo(cursorDot, "y", { duration: 0.3, ease: "power3" });
-
-const outlineX = gsap.quickTo(cursorOutline, "x", { duration: 0.7, ease: "power3" });
-const outlineY = gsap.quickTo(cursorOutline, "y", { duration: 0.7, ease: "power3" });
+const dotX     = gsap.quickTo(cursorDot, "x", { duration: 0.15, ease: "power3" });
+const dotY     = gsap.quickTo(cursorDot, "y", { duration: 0.15, ease: "power3" });
+const outlineX = gsap.quickTo(cursorOutline, "x", { duration: 0.55, ease: "power3" });
+const outlineY = gsap.quickTo(cursorOutline, "y", { duration: 0.55, ease: "power3" });
 
 window.addEventListener('mousemove', (e) => {
   gsap.to([cursorDot, cursorOutline], { opacity: 1, duration: 0.2 });
-  dotX(e.clientX);
-  dotY(e.clientY);
-  outlineX(e.clientX);
-  outlineY(e.clientY);
+  dotX(e.clientX); dotY(e.clientY);
+  outlineX(e.clientX); outlineY(e.clientY);
 });
 
-/* Hover scaling */
-hoverTargets.forEach(target => {
-  target.addEventListener('mouseenter', () => {
-    cursorOutline.classList.add('hover');
-  });
-  target.addEventListener('mouseleave', () => {
-    cursorOutline.classList.remove('hover');
-  });
+document.querySelectorAll('a, .skill-item, .badge').forEach(el => {
+  el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
 });
 
 window.addEventListener('click', () => {
   gsap.fromTo(cursorOutline,
     { scale: 1 },
-    { scale: 2, duration: 0.2, yoyo: true, repeat: 1 }
+    { scale: 1.6, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.inOut" }
   );
 });
+
+/* ── Intersection Observer: reveal elements + trigger skill bars ── */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('visible');
+
+    /* Skill bars: set width once card is visible */
+    entry.target.querySelectorAll('.skill-fill[data-level]').forEach(bar => {
+      bar.style.width = bar.dataset.level + '%';
+    });
+
+    /* Standalone skill fills (when skill-item itself is the revealed el) */
+    const bar = entry.target.querySelector('.skill-fill[data-level]');
+    if (bar) bar.style.width = bar.dataset.level + '%';
+
+    io.unobserve(entry.target);
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal, .section-label, .skill-item').forEach(el => io.observe(el));
+
+/* ── Count-up for numeric stats ── */
+document.querySelectorAll('.stat-num[data-count]').forEach(el => {
+  const target = parseInt(el.dataset.count, 10);
+  if (isNaN(target)) return;
+  const statsIO = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    let start = 0;
+    const step = () => {
+      start = Math.min(start + 1, target);
+      el.textContent = start;
+      if (start < target) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+    statsIO.disconnect();
+  }, { threshold: 0.5 });
+  statsIO.observe(el);
+});
 </script>
+
 </body>
 </html>
