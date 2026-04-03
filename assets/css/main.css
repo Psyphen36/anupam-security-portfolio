@@ -16,6 +16,7 @@
   --green-dim: #6b4428;
   --green-glow:rgba(203,143,95,0.12);
   --cyan:      #7dc4b0;   /* warm teal — links / skills section */
+  --black:     #000000
   --white:     #ede8dc;
   --muted:     #8a7d6d;
   --border:    #21262d;
@@ -78,7 +79,7 @@ body::after {
   to   { transform: translate(80px, 60px); }
 }
 
-a { color: var(--cyan); text-decoration: none; transition: color var(--transition); }
+a { color: var(--black); text-decoration: none; transition: color var(--transition); }
 a:hover { color: var(--green); }
 
 /* ══════════════════════════════
