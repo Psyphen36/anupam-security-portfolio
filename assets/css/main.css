@@ -13,6 +13,7 @@
   --bg2:       #0d1117;
   --bg3:       #131920;
   --green:     #FAEBD7;   /* warm amber — primary / about section */
+  --hilight-pink: #ff659f;
   --green-dim: #6b4428;
   --green-glow:rgba(225,200,179,0.1);
   --cyan:      #7dc4b0;   /* warm teal — links / skills section */
@@ -79,7 +80,7 @@ body::after {
   to   { transform: translate(80px, 60px); }
 }
 
-a { color: var(--s-about); text-decoration: none; transition: color var(--transition); }
+a { color: var(--hilight-pink); text-decoration: none; transition: color var(--transition); }
 a:hover { color: var(--green); }
 
 /* ══════════════════════════════
