@@ -9,17 +9,23 @@
 }
 
 :root {
-  --bg:        #080b0f;
-  --bg2:       #0d1117;
-  --bg3:       #131920;
-  --green:     #39d353;
-  --green-dim: #1a6b28;
-  --green-glow:rgba(57, 211, 83, 0.12);
-  --cyan:      #58d6f0;
-  --white:     #e6edf3;
-  --muted:     #7d8590;
-  --border:    #21262d;
-  --red:       #f85149;
+  --bg:        #f4f2ef;
+  --bg2:       #ebe7e2;
+  --bg3:       #e2ddd7;
+
+  --green:     #6f9f7a;   /* sage instead of neon */
+  --green-dim: #4f7a5a;
+  --green-glow:rgba(111, 159, 122, 0.12);
+
+  --cyan:      #5f8f9d;   /* muted blue, easier on eyes */
+
+  --white:     #2d2a26;   /* actual text color now */
+  --muted:     #6f6a64;
+
+  --border:    #d6d0c8;
+
+  --red:       #c46363;
+
   --font:      'JetBrains Mono', monospace;
   --transition: 0.2s ease;
 }
