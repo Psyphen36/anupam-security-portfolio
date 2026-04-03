@@ -286,13 +286,7 @@ section:last-of-type { border-bottom: none; }
   display: flex;
   align-items: center;
   gap: 12px;
-  opacity: 0;
-  transform: translateX(-10px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-.section-label.visible {
-  opacity: 1;
-  transform: none;
+  /* opacity/transform animation is handled by .js-anim guard in scroll-reveal block */
 }
 .section-label::after {
   content: '';
@@ -547,25 +541,37 @@ footer span { color: var(--green); }
 @keyframes blink { 50% { opacity: 0; } }
 
 /* ══════════════════════════════
-   Scroll-reveal for cards
+   Scroll-reveal — JS opt-in
+   Cards are visible by default.
+   JS adds .js-anim to <body>,
+   THEN we hide them until IO fires.
 ══════════════════════════════ */
-.reveal {
+.js-anim .card-anim {
   opacity: 0;
   transform: translateY(14px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
-.reveal.visible {
+.js-anim .card-anim.visible {
+  opacity: 1;
+  transform: none;
+}
+.js-anim .section-label {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.js-anim .section-label.visible {
   opacity: 1;
   transform: none;
 }
 
-/* stagger helpers */
-.reveal:nth-child(1) { transition-delay: 0.04s; }
-.reveal:nth-child(2) { transition-delay: 0.08s; }
-.reveal:nth-child(3) { transition-delay: 0.12s; }
-.reveal:nth-child(4) { transition-delay: 0.16s; }
-.reveal:nth-child(5) { transition-delay: 0.20s; }
-.reveal:nth-child(6) { transition-delay: 0.24s; }
+/* stagger within a grid/list */
+.js-anim .card-anim:nth-child(1) { transition-delay: 0.04s; }
+.js-anim .card-anim:nth-child(2) { transition-delay: 0.08s; }
+.js-anim .card-anim:nth-child(3) { transition-delay: 0.12s; }
+.js-anim .card-anim:nth-child(4) { transition-delay: 0.16s; }
+.js-anim .card-anim:nth-child(5) { transition-delay: 0.20s; }
+.js-anim .card-anim:nth-child(6) { transition-delay: 0.24s; }
 
 /* ══════════════════════════════
    Responsive
