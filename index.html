@@ -11,7 +11,8 @@ layout: null
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <!-- GSAP loaded sync — must be available before the inline script at bottom of body -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 </head>
 <body>
 
@@ -23,7 +24,7 @@ layout: null
   <!-- ── Header ── -->
   <header>
 
-    <!-- Availability signal — first thing recruiters see -->
+    <!-- Availability signal — first thing a recruiter sees -->
     <div class="avail-banner">
       <div class="avail-dot"></div>
       <span><strong>Open to work</strong> — actively looking for AppSec / Security Analyst roles</span>
@@ -76,7 +77,8 @@ layout: null
 
     <div class="stats">
       <div class="stat-item">
-        <div class="stat-num" data-count="{{ site.writeups_count | default: '4' }}">0</div>
+        <!-- Direct Liquid output — no JS count-up trick that could fail -->
+        <div class="stat-num">{{ site.writeups_count | default: site.posts.size }}</div>
         <div class="stat-label">research pieces</div>
       </div>
       {% if site.ctf_rank %}
@@ -87,7 +89,7 @@ layout: null
       {% endif %}
       {% if site.cves %}
       <div class="stat-item">
-        <div class="stat-num" data-count="{{ site.cves }}">0</div>
+        <div class="stat-num">{{ site.cves }}</div>
         <div class="stat-label">CVEs</div>
       </div>
       {% endif %}
@@ -105,7 +107,7 @@ layout: null
     <div class="section-label">security tooling</div>
 
     <div class="writeup-grid">
-      <a class="writeup-card reveal" href="https://github.com/Psyphen36/OzzMon" target="_blank" rel="noopener">
+      <a class="writeup-card card-anim" href="https://github.com/Psyphen36/OzzMon" target="_blank" rel="noopener">
         <div class="wu-left">
           <div class="wu-title">OzzMon — Continuous Recon &amp; Attack Surface Monitoring</div>
           <div class="wu-meta">
@@ -139,7 +141,7 @@ layout: null
       {% assign writeups = writeups | sort: "date" | reverse %}
       {% for wu in writeups %}
       {% if wu.title %}
-      <a class="writeup-card reveal" href="{{ wu.url | relative_url }}">
+      <a class="writeup-card card-anim" href="{{ wu.url | relative_url }}">
         <div class="wu-left">
           <div class="wu-title">{{ wu.title }}</div>
           <div class="wu-meta">
@@ -180,7 +182,7 @@ layout: null
     <div class="section-label">skills</div>
     <div class="skills-grid">
       {% for skill in site.skills %}
-      <div class="skill-item reveal">
+      <div class="skill-item card-anim">
         <div class="skill-name">{{ skill.name }}</div>
         <div class="skill-bar">
           <div class="skill-fill" data-level="{{ skill.level }}"></div>
@@ -197,71 +199,69 @@ layout: null
 </div><!-- /container -->
 
 <script>
-/* ── Custom cursor (GSAP) ── */
-const cursorDot     = document.getElementById('cursor-dot');
-const cursorOutline = document.getElementById('cursor-outline');
+/* ── 1. Custom cursor ───────────────────────────────── */
+(function () {
+  var dot     = document.getElementById('cursor-dot');
+  var outline = document.getElementById('cursor-outline');
+  if (!dot || !outline || typeof gsap === 'undefined') return;
 
-const dotX     = gsap.quickTo(cursorDot, "x", { duration: 0.15, ease: "power3" });
-const dotY     = gsap.quickTo(cursorDot, "y", { duration: 0.15, ease: "power3" });
-const outlineX = gsap.quickTo(cursorOutline, "x", { duration: 0.55, ease: "power3" });
-const outlineY = gsap.quickTo(cursorOutline, "y", { duration: 0.55, ease: "power3" });
+  var moveX  = gsap.quickTo(dot,     'x', { duration: 0.12, ease: 'power3' });
+  var moveY  = gsap.quickTo(dot,     'y', { duration: 0.12, ease: 'power3' });
+  var trailX = gsap.quickTo(outline, 'x', { duration: 0.5,  ease: 'power3' });
+  var trailY = gsap.quickTo(outline, 'y', { duration: 0.5,  ease: 'power3' });
 
-window.addEventListener('mousemove', (e) => {
-  gsap.to([cursorDot, cursorOutline], { opacity: 1, duration: 0.2 });
-  dotX(e.clientX); dotY(e.clientY);
-  outlineX(e.clientX); outlineY(e.clientY);
-});
-
-document.querySelectorAll('a, .skill-item, .badge').forEach(el => {
-  el.addEventListener('mouseenter', () => cursorOutline.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursorOutline.classList.remove('hover'));
-});
-
-window.addEventListener('click', () => {
-  gsap.fromTo(cursorOutline,
-    { scale: 1 },
-    { scale: 1.6, duration: 0.18, yoyo: true, repeat: 1, ease: "power2.inOut" }
-  );
-});
-
-/* ── Intersection Observer: reveal elements + trigger skill bars ── */
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    entry.target.classList.add('visible');
-
-    /* Skill bars: set width once card is visible */
-    entry.target.querySelectorAll('.skill-fill[data-level]').forEach(bar => {
-      bar.style.width = bar.dataset.level + '%';
-    });
-
-    /* Standalone skill fills (when skill-item itself is the revealed el) */
-    const bar = entry.target.querySelector('.skill-fill[data-level]');
-    if (bar) bar.style.width = bar.dataset.level + '%';
-
-    io.unobserve(entry.target);
+  window.addEventListener('mousemove', function (e) {
+    gsap.to([dot, outline], { opacity: 1, duration: 0.2 });
+    moveX(e.clientX); moveY(e.clientY);
+    trailX(e.clientX); trailY(e.clientY);
   });
-}, { threshold: 0.12 });
 
-document.querySelectorAll('.reveal, .section-label, .skill-item').forEach(el => io.observe(el));
+  document.querySelectorAll('a, .skill-item, .badge').forEach(function (el) {
+    el.addEventListener('mouseenter', function () { outline.classList.add('hover'); });
+    el.addEventListener('mouseleave', function () { outline.classList.remove('hover'); });
+  });
 
-/* ── Count-up for numeric stats ── */
-document.querySelectorAll('.stat-num[data-count]').forEach(el => {
-  const target = parseInt(el.dataset.count, 10);
-  if (isNaN(target)) return;
-  const statsIO = new IntersectionObserver(([entry]) => {
-    if (!entry.isIntersecting) return;
-    let start = 0;
-    const step = () => {
-      start = Math.min(start + 1, target);
-      el.textContent = start;
-      if (start < target) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-    statsIO.disconnect();
-  }, { threshold: 0.5 });
-  statsIO.observe(el);
-});
+  window.addEventListener('click', function () {
+    gsap.fromTo(outline,
+      { scale: 1 },
+      { scale: 1.6, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.inOut' }
+    );
+  });
+})();
+
+/* ── 2. Scroll-reveal (JS opt-in — content visible without JS) ── */
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+
+  /* Only hide elements once we know JS + IO is available */
+  document.body.classList.add('js-anim');
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('visible');
+      io.unobserve(entry.target);
+    });
+  }, { threshold: 0.06 });
+
+  document.querySelectorAll('.card-anim, .section-label').forEach(function (el) {
+    io.observe(el);
+  });
+
+  /* Skill bar widths — set once the card scrolls into view */
+  var skillIO = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      var bar = entry.target.querySelector('.skill-fill[data-level]');
+      if (bar) bar.style.width = bar.dataset.level + '%';
+      skillIO.unobserve(entry.target);
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.skill-item').forEach(function (el) {
+    skillIO.observe(el);
+  });
+})();
 </script>
 
 </body>
