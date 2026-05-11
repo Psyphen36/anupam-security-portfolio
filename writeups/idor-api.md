@@ -32,6 +32,8 @@ It returned my own account information: name, email, job title, assigned roles, 
   "company": "..."
 }
 ```
+![BOLA1]({{ '/assets/img/Comcast/Comcast_ozzID.png' | relative_url }})
+
 
 Sequential numeric IDs in a production API are always worth a second look.
 
@@ -47,6 +49,8 @@ GET /api/v1/10483
 
 The server responded with a `200 OK` and returned the full profile of another user — someone I had no business accessing. No authorization check. No ownership validation. Just a raw lookup by ID.
 
+![BOLA2]({{ '/assets/img/Comcast/comcast_BOLA.png' | relative_url }})
+
 This is a classic **Insecure Direct Object Reference (IDOR)**. The application was treating the user ID as both an identifier *and* an access token, which it isn't.
 
 ---
@@ -60,6 +64,8 @@ The steps were almost embarrassingly simple:
 3. Increment or decrement the ID in the direct endpoint
 4. Receive another user's full profile in response
 
+![BOLA3]({{ '/assets/img/Comcast/comcast_BOLA2.png' | relative_url }})
+
 Because the IDs were sequential integers, iterating through a range would expose every user in the system. I stopped after confirming the issue with two or three IDs — no need to pull a full dump to prove impact.
 
 A basic loop would look like:
@@ -70,7 +76,7 @@ import requests
 session = requests.Session()
 # ... authenticate here ...
 
-for user_id in range(10000, 10020):
+for user_id in range(1, 10000):
     r = session.get(f"https://[redacted]/api/v1/{user_id}")
     if r.status_code == 200:
         print(f"[+] {user_id}: {r.json().get('email')}")
