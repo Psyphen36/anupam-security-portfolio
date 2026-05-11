@@ -17,13 +17,11 @@ discord_server:      "RP9GA3qaVv"
 
 # Bio shown on homepage
 bio: >
-  I'm an application security researcher currently looking for my first role in AppSec or security analysis.
+  Security researcher with experience in web apps, APIs, bug bounty, recon and automation. Over the past two years I’ve reported real vulnerabilities in production systems including access control, authentication, and SSO issues.
 
-  Over the past two years I've been learning and doing bug bounty work — mostly web apps and APIs. I've reported real vulnerabilities in production environments: broken access control, SSO issues, and authentication flaws. Nothing massive, but real findings in real systems.
+  Comfortable with Burp Suite, manual testing, Github, AI/ML, and writing technical reports. I also built a small recon pipeline called OzzMon to monitor attack surface changes automatically.
 
-  I'm comfortable with Burp Suite, manual testing, and writing clear reports. I also built a small recon pipeline (OzzMon) that runs on GitHub Actions to monitor attack surface changes.
-
-  Still learning. But I test carefully, document thoroughly, and don't report noise.
+  Interested in AppSec, security analysis, pentesting, and security tooling roles.
 
 # Skill areas shown as badges in header
 focus_areas:
