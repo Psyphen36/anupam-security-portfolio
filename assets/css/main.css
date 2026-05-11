@@ -491,6 +491,15 @@ section:last-of-type { border-bottom: none; }
   color: var(--green);
 }
 
+.wu-content img {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wu-content img:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 20px rgba(0,255,140,0.08);
+}
+
 /* ══════════════════════════════
    Skills
 ══════════════════════════════ */
