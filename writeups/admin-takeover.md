@@ -22,11 +22,11 @@ The application managed employee records, shift data, and internal roles. Intere
 
 The first thing I noticed was the login form. It asked for an **Employee ID** (numeric) and a password. When I entered a valid ID with a wrong password, the error was:
 
-> *"Incorrect password."*
+![Behavior when correct employeeID]({{ '/assets/img/McDonald/mcd_idor0.jpg' | relative_url }})
 
 When I entered an ID that didn't exist:
 
-> *"Employee not found."*
+![Behavior when incorrect employeeID]({{ '/assets/img/McDonald/mcd_idor.jpg' | relative_url }})
 
 That's a textbook user enumeration issue. The application was leaking whether an account existed based on the error message alone. From here, I could confirm valid IDs by iterating through a numeric range and watching for the error to change.
 
@@ -79,6 +79,10 @@ The server was accepting role data from the client and trusting it without any s
 
 Forwarded it — and the application responded as if I were an admin. Full access: employee records, role management, internal tooling, everything.
 
+![Became Super Admin]({{ '/assets/img/McDonald/employee_data.jpg' | relative_url }})
+
+
+![There reservations]({{ '/assets/img/McDonald/blackpoint_grid.jpg' | relative_url }})
 ---
 
 ## Full Attack Chain
@@ -116,3 +120,7 @@ Beyond that:
 - Use uniform error messages regardless of whether an account exists
 - Enforce a minimum password complexity policy
 - Log and alert on unusual privilege-adjacent API calls
+
+But it was in a third party app.
+
+![OOS]({{ '/assets/img/McDonald/mcd_response.jpg' | relative_url }})
